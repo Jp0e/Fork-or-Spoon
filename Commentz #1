@@ -1,0 +1,46 @@
+First Scrum meeting 
+1/16/24
+Andrew will be working on student class. has made into a branch//commited 
+Chase is doing circuler linked list and que
+Josh P is working on Gui
+Josh F is gambling his life away
+Dylan is taking notes and working on gui with josh P
+
+Brainstorming 
+file is going run simulation
+summary of students who saw slides
+average number of students slides
+list of students depending on days (2 day student sees %, 3 day %) 
+speed bump interest would it change the visability of signs because of slower speed
+
+Make a que system for each day / store the signs in object 
+if student sees sign add to list / if student see sign again don't add
+gui system will have user input 
+entry for # of students
+entry for # of signs
+entry for time of sign display
+entry for speed of car
+entry for standard deviation of speed of car
+entry for standard deviation of sign speed
+//entry for how long student see the sign
+display how many signs each student saw
+display average number of signs seen thruout the week
+display avg number of signs 1 day/2 day student saw up to 5
+
+WHAT WE ACCOMPLISHED TODAY 1/16/2025
+  Created Flowchart
+  Established who's working on what
+  Andrew: made foundation of student class and its child-classes, helped with gameplan
+  Josh P: made shell of Gui-- right now it doesn't lead anywhere, just has entry tables that do nothing yetm, helped with gameplan, created flowchart
+  Dylan: helped everyone figure out what they are going to do, took notes, helped create gameplan/ shell for gui
+  Josh F: "Allegedly" Got a Flat Tire, when called gave some thoughts
+  Chase: Started review past code to make his circular list, create gameplan, helped with brain storming 
+
+What we want to accomplish by next Tuesday 1/22/2025
+  Dylan: Plans to make outline of sign module (template for it), count how many signs columbia has in rotation right now
+  Josh P: Make complete shell of the Gui, give it an image, give good appearance, check in on others
+  Andrew: Make a dictionary for days of week, add more variation for days students attend schools, add to student class, will work on what he can on everything
+  Chase: Have que and circular linked list done, ue will be ablke to contain car class, other will have room to contain sign/student class, wants to work on unpacking stuff
+         Wants to add something but forgot
+  Josh F: Gonna try to build a database to display information
+
