@@ -1,0 +1,78 @@
+import random
+
+class Student:
+    """Base class representing a student traveling up a hill at a variable speed."""
+
+    # Define the available days for college (Monday to Friday)
+    DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+
+    def __init__(self, name):
+        """Initialize the student with a name and a random travel speed."""
+        self.name = name
+        self.avg_speed = 15  # mph
+
+        # Assign a random speed with a deviation of ±5 mph (10-20 mph range)
+        self.speed = random.randint(10, 20)
+
+        # Placeholder for attendance days (to be set in child classes)
+        self.attendance_days = []
+
+    def time_to_top(self, distance_miles):
+        """Calculate the time (in minutes) required to reach the top of the hill."""
+        
+        # Convert hours to minutes
+        return (distance_miles / self.speed) * 60  
+
+    def __str__(self):
+        """Return a formatted string representation of the student, showing their schedule."""
+        days = ", ".join(self.attendance_days)
+        return (f"{self.name} ({len(self.attendance_days)}-day student) travels at {self.speed} mph "
+                f"and attends college on: {days}.")
+
+class TwoDayStudent(Student):
+    """Child class for students attending college 2 days a week."""
+
+    def __init__(self, name):
+        """Initialize a 2-day student with a fixed schedule (Monday & Wednesday)."""
+        super().__init__(name)
+        self.attendance_days = ["Monday", "Wednesday"]
+
+class ThreeDayStudent(Student):
+    """Child class for students attending college 3 days a week."""
+
+    def __init__(self, name):
+        """Initialize a 3-day student with a fixed schedule (Monday, Wednesday, Friday)."""
+        super().__init__(name)
+        self.attendance_days = ["Monday", "Wednesday", "Friday"]
+
+class FourDayStudent(Student):
+    """Child class for students attending college 4 days a week."""
+
+    def __init__(self, name):
+        """Initialize a 4-day student with a fixed schedule (Monday to Thursday)."""
+        super().__init__(name)
+        self.attendance_days = ["Monday", "Tuesday", "Wednesday", "Thursday"]
+
+class FiveDayStudent(Student):
+    """Child class for students attending college 5 days a week."""
+
+    def __init__(self, name):
+        """Initialize a 5-day student with a fixed schedule (Monday to Friday)."""
+        super().__init__(name)
+        self.attendance_days = self.DAYS_OF_WEEK
+
+# Example usage
+if __name__ == "__main__":
+    # List of available student types
+    student_classes = [TwoDayStudent, ThreeDayStudent, FourDayStudent, FiveDayStudent]
+
+    # Randomly select a student type
+    random_student_class = random.choice(student_classes)
+
+    # Create an instance of the selected student type with the name "Alex"
+    student = random_student_class("Alex")
+
+    # Print the student's schedule and travel speed
+    print(student)
+
+
