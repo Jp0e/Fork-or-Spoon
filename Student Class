@@ -4,75 +4,144 @@ class Student:
     """Base class representing a student traveling up a hill at a variable speed."""
 
     # Define the available days for college (Monday to Friday)
-    DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    Days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
-    def __init__(self, name):
-        """Initialize the student with a name and a random travel speed."""
+    def __init__(self, name, time=None):
+        """Initialize the student with a name, a random travel speed, and a provided or random travel time."""
         self.name = name
         self.avg_speed = 15  # mph
 
-        # Assign a random speed with a deviation of ±5 mph (10-20 mph range)
-        self.speed = random.randint(10, 20)
+        # Assign a random speed within the +-5 mph range (10-20 mph)
+        self.speed = random.uniform(10, 20)
 
-        # Placeholder for attendance days (to be set in child classes)
-        self.attendance_days = []
+        # Initialize attendance dictionary with all days set to False
+        self.attendance_schedule = {day: False for day in self.Days}
 
-    def time_to_top(self, distance_miles):
-        """Calculate the time (in minutes) required to reach the top of the hill."""
-        
-        # Convert hours to minutes
-        return (distance_miles / self.speed) * 60  
+        # If time is provided, use it; otherwise, generate a random value between 45s and 75s
+        self.time = round(time if time is not None else random.uniform(0.75, 1.25), 4)
 
-    def __str__(self):
-        """Return a formatted string representation of the student, showing their schedule."""
-        days = ", ".join(self.attendance_days)
-        return (f"{self.name} ({len(self.attendance_days)}-day student) travels at {self.speed} mph "
-                f"and attends college on: {days}.")
+    def time_sign_seen(self, time):
+        """Returns Time in both seconds and minutes/seconds format."""
+        total_seconds = round(time * 60, 2)  # Convert to seconds
+        minutes = int(total_seconds // 60)  # Get whole minutes
+        seconds = int(total_seconds % 60)  # Get remaining seconds
+        if total_seconds > 60:
+            return f"{minutes} minute and {seconds} seconds"
+        elif total_seconds < 60:
+            return f"{seconds} seconds"
+        else:
+            return ("Did not see sign")
+
+    def assign_attendance(self, selected_days):
+        """Assign True for the selected days in the attendance schedule."""
+        for day in selected_days:
+            self.attendance_schedule[day] = True
+
+    def is_attending_today(self, day):
+        """Check if the student is attending college on a given day."""
+        return self.attendance_schedule.get(day, False)
+
+# Child Classes
+class OneDayStudent(Student):
+    """Child class for students attending college 1 day a week"""
+
+    Possible_Schedules = [
+        ["Monday"], 
+        ["Tuesday"], 
+        ["Wednesday"], 
+        ["Thursday"], 
+        ["Friday"]
+    ]
+
+    def __init__(self, name, time=None):
+        super().__init__(name, time)
+        selected_days = random.choice(self.Possible_Schedules)
+        self.assign_attendance(selected_days)
 
 class TwoDayStudent(Student):
     """Child class for students attending college 2 days a week."""
 
-    def __init__(self, name):
-        """Initialize a 2-day student with a fixed schedule (Monday & Wednesday)."""
-        super().__init__(name)
-        self.attendance_days = ["Monday", "Wednesday"]
+    Possible_Schedules = [
+        ["Monday", "Wednesday"], 
+        ["Tuesday", "Thursday"], 
+        ["Wednesday", "Friday"],
+        ["Monday", "Thursday"], 
+        ["Tuesday", "Friday"]
+    ]
+
+    def __init__(self, name, time=None):
+        """Initialize a 2-day student with a randomly chosen valid schedule."""
+        super().__init__(name, time)
+        selected_days = random.choice(self.Possible_Schedules)
+        self.assign_attendance(selected_days)
 
 class ThreeDayStudent(Student):
     """Child class for students attending college 3 days a week."""
 
-    def __init__(self, name):
-        """Initialize a 3-day student with a fixed schedule (Monday, Wednesday, Friday)."""
-        super().__init__(name)
-        self.attendance_days = ["Monday", "Wednesday", "Friday"]
+    Possible_Schedules = [
+        ["Monday", "Wednesday", "Friday"], 
+        ["Tuesday", "Thursday", "Friday"],
+        ["Monday", "Tuesday", "Thursday"], 
+        ["Monday", "Wednesday", "Thursday"],
+        ["Tuesday", "Wednesday", "Friday"]
+    ]
+
+    def __init__(self, name, time=None):
+        """Initialize a 3-day student with a randomly chosen valid schedule."""
+        super().__init__(name, time)
+        selected_days = random.choice(self.Possible_Schedules)
+        self.assign_attendance(selected_days)
 
 class FourDayStudent(Student):
     """Child class for students attending college 4 days a week."""
 
-    def __init__(self, name):
-        """Initialize a 4-day student with a fixed schedule (Monday to Thursday)."""
-        super().__init__(name)
-        self.attendance_days = ["Monday", "Tuesday", "Wednesday", "Thursday"]
+    Possible_Schedules = [
+        ["Monday", "Tuesday", "Wednesday", "Thursday"],
+        ["Monday", "Tuesday", "Wednesday", "Friday"],
+        ["Monday", "Tuesday", "Thursday", "Friday"],
+        ["Monday", "Wednesday", "Thursday", "Friday"],
+        ["Tuesday", "Wednesday", "Thursday", "Friday"]
+    ]
+
+    def __init__(self, name, time=None):
+        """Initialize a 4-day student with a randomly chosen valid schedule."""
+        super().__init__(name, time)
+        selected_days = random.choice(self.Possible_Schedules)
+        self.assign_attendance(selected_days)
 
 class FiveDayStudent(Student):
     """Child class for students attending college 5 days a week."""
 
-    def __init__(self, name):
+    def __init__(self, name, time=None):
         """Initialize a 5-day student with a fixed schedule (Monday to Friday)."""
-        super().__init__(name)
-        self.attendance_days = self.DAYS_OF_WEEK
+        super().__init__(name, time)
+        self.assign_attendance(self.Days)  # Attends every weekday
 
 # Example usage
 if __name__ == "__main__":
     # List of available student types
-    student_classes = [TwoDayStudent, ThreeDayStudent, FourDayStudent, FiveDayStudent]
+    student_classes = [OneDayStudent, TwoDayStudent, ThreeDayStudent, FourDayStudent, FiveDayStudent]
 
-    # Randomly select a student type
-    random_student_class = random.choice(student_classes)
+    # Generate a random number of students (e.g., between 10 and 20)
+    num_students = random.randint(10, 20)
 
-    # Create an instance of the selected student type with the name "Alex"
-    student = random_student_class("Alex")
+    # Create students, some with manually set Time
+    students = [
+        random.choice(student_classes)(f"Student {i+1}", time=(0.85 if i % 5 == 0 else None))
+        for i in range(num_students)
+    ]
 
-    # Print the student's schedule and travel speed
-    print(student)
+    # Iterate through all weekdays
+    for day in Student.Days:
+        print(f"\nAttendance for {day}:\n")
+        
+        # Filter students who attend on the selected day
+        attending_students = [student for student in students if student.is_attending_today(day)]
 
-
+        # Display students attending on that day
+        if attending_students:
+            for student in attending_students:
+                print(f"- {student.name} ({len([d for d in student.attendance_schedule if student.attendance_schedule[d]])}-day student), "
+                      f"Speed: {student.speed:.2f} mph, Time Sign Seen: {student.time_sign_seen(student.time)}")
+        else:
+            print("  No students are attending today.")
