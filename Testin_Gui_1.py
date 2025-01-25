@@ -2,11 +2,12 @@ import tkinter as tk
 from tkinter import messagebox
 import os
 from PIL import Image, ImageTk
+# main file import
+'''import Main'''
 
 # directory_path = os.path.dirname(__file__)
 
-class App:
-    ''' Currently just a shell, this gui will take inputs '''
+class Scrum_Gui:
     # Creates a Gui window
     def __init__(self, window):
         self.window = window
@@ -31,43 +32,56 @@ class App:
         self.keyword1_entry.grid(row=0, column=1, padx=5)
 
         # Number of signs to display entry box
-        tk.Label(entry_frame, text="Number of Signs to Display:").grid(row=0, column=2, padx=5)
+        tk.Label(entry_frame, text="Speed of Cars:").grid(row=0, column=2, padx=5)
         self.keyword2_entry = tk.Entry(entry_frame, width=15)
         self.keyword2_entry.grid(row=0, column=3, padx=5)
 
         # Sign display time entry box
-        tk.Label(entry_frame, text="Time of Sign Display(seconds):").grid(row=1, column=0, padx=5)
+        tk.Label(entry_frame, text="Time of Sign Display:").grid(row=1, column=0, padx=5)
         self.keyword3_entry = tk.Entry(entry_frame, width=15)
         self.keyword3_entry.grid(row=1, column=1, padx=5)
 
-        # Time std dev entry box
-        tk.Label(entry_frame, text="Variation in Display Time(seconds):").grid(row=1, column=2, padx=5)
+        # Number of Signs to Display Entry box
+        tk.Label(entry_frame, text="# of Signs to Display:").grid(row=1, column=2, padx=5)
         self.keyword4_entry = tk.Entry(entry_frame, width=15)
         self.keyword4_entry.grid(row=1, column=3, padx=5)
-
-        # Speed of cars entry box
-        tk.Label(entry_frame, text="Speed of Cars(mph):").grid(row=2, column=0, padx=5)
-        self.keyword5_entry = tk.Entry(entry_frame, width=15)
-        self.keyword5_entry.grid(row=2, column=1, padx=5)
-
-        # Variation of car speed keyword entry box
-        tk.Label(entry_frame, text="Car Speed Variation(mph):").grid(row=2, column=2, padx=5)
-        self.keyword6_entry = tk.Entry(entry_frame, width=15)
-        self.keyword6_entry.grid(row=2, column=3, padx=5)
 
         # Display Results
         self.results = tk.Text(window, height=7, width=60)
         self.results.pack(padx=5, pady=5)
 
-        # # Result label
-        # self.result_label = tk.Label(window, text="Results")
-        # self.result_label.pack(pady=10)
-
         # Submit button
         self.submit_button = tk.Button(window, text="Submit", width=20)
         self.submit_button.pack(pady=10)
 
+        # load data from 'Main' File
+        self.load_data()
+
+    # Function for submit button to collect data into a dictionary
+    def submit(self):
+        data = {
+            "Number of Students": self.keyword1_entry.get(),
+            "Speed of Cars": self.keyword2_entry.get(),
+            "Time of Sign Display": self.keyword3_entry.get(),
+            "# of Signs to Display": self.keyword4_entry.get(),
+        }
+
+        '''
+        # THIS IS WHERE WE WILL CALL THE MAIN FILE
+        Main.send_data(data)
+        '''
+
+    '''
+    # Function to load data from main file and display it in the text box
+    def load_data(self):
+        imported_data = Main.get_information()
+        # Clear the current content of the text box
+        self.results.delete(1.0, tk.END)
+        # Put the data imported from Main into the Results text box
+        self.results.insert(tk.END, imported_data)
+    '''
+
 if __name__ == "__main__":
     window = tk.Tk()
-    app = App(window)
+    gui = Scrum_Gui(window)
     window.mainloop()
