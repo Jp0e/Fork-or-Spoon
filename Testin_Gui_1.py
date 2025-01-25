@@ -54,8 +54,8 @@ class Scrum_Gui:
         self.submit_button = tk.Button(window, text="Submit", width=20)
         self.submit_button.pack(pady=10)
 
-        # load data from 'Main' File
-        self.load_data()
+        # # load data from 'Main' File
+        # self.load_data()
 
     # Function for submit button to collect data into a dictionary
     def submit(self):
