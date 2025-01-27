@@ -123,7 +123,7 @@ def process_queue_and_signs(student_queue, signs):
         viewed_signs = {sign: round(time, 2) for sign, time in student.viewership_stats.items() if time > 0}
 
         # Cleaned up output format
-        print(f"Student {student.index} | Time Available: {student.time:.2f}s")
+        print(f"Student {student.identifier} | Time Available: {student.time:.2f}s")
         if viewed_signs:
             sign_list = ", ".join([f"Sign {sign}: {time}s" for sign, time in viewed_signs.items()])
             print(f"**Viewed:** {sign_list}")

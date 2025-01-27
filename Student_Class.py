@@ -2,14 +2,14 @@ import random
 
 
 class Student:
-    """Base class representing a student traveling up a hill at a fixed speed."""
+    """Base class representing a student traveling up a hill at a variable speed."""
 
     # Define the available days for college (Monday to Friday)
     Days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
-    def __init__(self, index, time=None):
-        """Initialize the student with a name, a random travel speed, and a provided or random travel time."""
-        self.index = index
+    def __init__(self, identifier):
+        """Initialize the student with an identifier and a random travel speed."""
+        self.identifier = identifier  # Unique identifier for the student
         self.avg_speed = 15  # mph
 
         # Assign a random speed within the ±5 mph range (10-20 mph)
@@ -18,14 +18,21 @@ class Student:
         # Initialize attendance dictionary with all days set to False
         self.attendance_schedule = {day: False for day in self.Days}
 
-        # If time is provided, use it; otherwise, generate a random value between 45s and 75s
-        self.time = round(time if time is not None else random.uniform(0.75, 1.25), 4)
+        # Calculate the time to traverse 550 feet based on speed
+        self.time = self.calculate_time()
+
+    def calculate_time(self):  # Added means to calculate viewing time from speed - Chase
+        """Calculate the time in seconds to traverse 600 feet based on speed."""
+        distance_in_miles = 550 / 5280  # Convert 600 feet to miles
+        time_in_hours = distance_in_miles / self.speed  # Time in hours
+        time_in_seconds = time_in_hours * 3600  # Convert hours to seconds
+        return round(time_in_seconds, 4)
 
     def assign_attendance(self, selected_days):
-        """Assign attendance days as a list (instead of a dictionary)."""
+        """Assign attendance days as a list and update the dictionary for compatibility."""
         self.attendance_days = selected_days  # Store as a list
         for day in selected_days:
-            self.attendance_schedule[day] = True  # Keep dictionary for compatibility
+            self.attendance_schedule[day] = True
 
     def is_attending_today(self, day):
         """Check if the student is attending college on a given day."""
@@ -45,7 +52,7 @@ class OneDayStudent(Student):
     ]
 
     def __init__(self, index, time=None):
-        super().__init__(index, time)
+        super().__init__(index)
         selected_days = random.choice(self.Possible_Schedules)
         self.assign_attendance(selected_days)
 
@@ -63,7 +70,7 @@ class TwoDayStudent(Student):
 
     def __init__(self, index, time=None):
         """Initialize a 2-day student with a randomly chosen valid schedule."""
-        super().__init__(index, time)
+        super().__init__(index)
         selected_days = random.choice(self.Possible_Schedules)
         self.assign_attendance(selected_days)
 
@@ -81,7 +88,7 @@ class ThreeDayStudent(Student):
 
     def __init__(self, index, time=None):
         """Initialize a 3-day student with a randomly chosen valid schedule."""
-        super().__init__(index, time)
+        super().__init__(index)
         selected_days = random.choice(self.Possible_Schedules)
         self.assign_attendance(selected_days)
 
@@ -99,7 +106,7 @@ class FourDayStudent(Student):
 
     def __init__(self, index, time=None):
         """Initialize a 4-day student with a randomly chosen valid schedule."""
-        super().__init__(index, time)
+        super().__init__(index)
         selected_days = random.choice(self.Possible_Schedules)
         self.assign_attendance(selected_days)
 
@@ -109,7 +116,7 @@ class FiveDayStudent(Student):
 
     def __init__(self, index, time=None):
         """Initialize a 5-day student with a fixed schedule (Monday to Friday)."""
-        super().__init__(index, time)
+        super().__init__(index)
         self.assign_attendance(self.Days)  # Attends every weekday
 
 
@@ -138,10 +145,9 @@ if __name__ == "__main__":
         if attending_students:
             for student in attending_students:
                 print(
-                    f"- {student.index}"
+                    f"- {student.identifier}"
                     f"({len([d for d in student.attendance_schedule if student.attendance_schedule[d]])}-day student),"
-                    f"Speed: {student.speed:.2f} mph"
-                    )
-                # Time Sign Seen: {student.time_sign_seen(student.time)}")
+                    f"Speed: {student.speed:.2f} mph, View Time: {student.time:.2f}"
+                )
         else:
             print("  No students are attending today.")
