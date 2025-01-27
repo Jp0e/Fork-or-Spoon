@@ -1,6 +1,6 @@
 import random
 from queue import Queue
-from Student import OneDayStudent, TwoDayStudent, ThreeDayStudent, FourDayStudent, FiveDayStudent
+from Student_Class import OneDayStudent, TwoDayStudent, ThreeDayStudent, FourDayStudent, FiveDayStudent
 
 
 class CircularLinkedList:
@@ -48,16 +48,14 @@ class CircularLinkedList:
             self.current_index = (self.current_index + 1) % len(self.items)  # Move to the next item
 
 
-
 # List of available student types
 student_classes = [OneDayStudent, TwoDayStudent, ThreeDayStudent, FourDayStudent, FiveDayStudent]
 
 # Generate a random number of students
 students = [
-    random.choice(student_classes)(i, time=random.uniform(0.75, 1.25)) 
+    random.choice(student_classes)(i, time=random.uniform(0.75, 1.25))
     for i in range(1, 101)  # Adjust student count as needed
 ]
-
 
 
 # TODO This is a temp placeholder for the Sign class while the other Scrumdog Millionairez
@@ -179,7 +177,7 @@ if __name__ == "__main__":
 
     # Generate a random number of students
     students = [
-        random.choice(student_classes)(i, time=random.uniform(0.75, 1.25)) 
+        random.choice(student_classes)(i, time=random.uniform(0.75, 1.25))
         for i in range(1, 20)  # Adjust student count as needed
     ]
 
