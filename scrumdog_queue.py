@@ -1,4 +1,6 @@
+import random
 from queue import Queue
+from Student_Class import OneDayStudent, TwoDayStudent, ThreeDayStudent, FourDayStudent, FiveDayStudent
 
 
 class CircularLinkedList:
@@ -46,23 +48,14 @@ class CircularLinkedList:
             self.current_index = (self.current_index + 1) % len(self.items)  # Move to the next item
 
 
-# TODO This is a temp placeholder for the Student class while the other Scrumdog Millionairez
-# Complete their constructors. The Attributes should line up with the ones they create.
-class Student:
-    """
-    Represents a student with a viewing time, item viewership stats, and attendance days.
+# List of available student types
+student_classes = [OneDayStudent, TwoDayStudent, ThreeDayStudent, FourDayStudent, FiveDayStudent]
 
-    Attributes:
-        index (int): The identifier of the student.
-        time (float): The total time the student has to view items.
-        viewership_stats (dict): A dictionary mapping item indices to the time viewed.
-        attendance_days (list): The days the student is on campus (e.g., ["Monday", "Wednesday"]).
-    """
-    def __init__(self, index, time, attendance_days):
-        self.index = index  # Unique identifier for the student
-        self.time = time  # Total time available for viewing
-        self.attendance_days = attendance_days  # List of days the student attends
-        self.viewership_stats = {}  # Initialize as an empty dictionary for tracking stats
+# Generate a random number of students
+students = [
+    random.choice(student_classes)(i, time=random.uniform(0.75, 1.25))
+    for i in range(1, 101)  # Adjust student count as needed
+]
 
 
 # TODO This is a temp placeholder for the Sign class while the other Scrumdog Millionairez
@@ -94,6 +87,7 @@ def initialize_viewership_stats(students, total_signs):
 
 
 # TODO make this store the sign viewership time stat separately for each day
+
 def process_queue_and_signs(student_queue, signs):
     """
     Processes a queue of students viewing items in a circular linked list.
@@ -125,10 +119,17 @@ def process_queue_and_signs(student_queue, signs):
                 student.viewership_stats[current_sign.index] += current_sign.time
                 signs.rotate()  # Move to the next sign
 
-        # Print the student's viewership stats after processing
-        print(
-            f"Student {student.index} with time {student.time} viewership stats: {student.viewership_stats}"
-        )
+        # Filter out signs where viewership time is 0
+        viewed_signs = {sign: round(time, 2) for sign, time in student.viewership_stats.items() if time > 0}
+
+        # Cleaned up output format
+        print(f"Student {student.identifier} | Time Available: {student.time:.2f}s")
+        if viewed_signs:
+            sign_list = ", ".join([f"Sign {sign}: {time}s" for sign, time in viewed_signs.items()])
+            print(f"**Viewed:** {sign_list}")
+        else:
+            print("No signs viewed")
+        print("-" * 50)  # Divider for clarity
 
 
 def process_students_for_week(student_list, signs):
@@ -145,7 +146,7 @@ def process_students_for_week(student_list, signs):
     days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
     for day in days_of_week:
-        print(f"Processing for {day}:")  # Indicate the day being processed
+        print(f"\nProcessing for {day}:\n")  # Indicate the day being processed
         daily_queue = Queue()  # Create a queue for students attending on this day
 
         for student in student_list:
@@ -171,10 +172,13 @@ if __name__ == "__main__":
     total_signs = len(signs.items)
 
     # Create a list of students
+    # List of available student types
+    student_classes = [OneDayStudent, TwoDayStudent, ThreeDayStudent, FourDayStudent, FiveDayStudent]
+
+    # Generate a random number of students
     students = [
-        Student(1, 18, ["Monday", "Wednesday", "Friday"]),
-        Student(2, 16, ["Tuesday"]),
-        Student(3, 22, ["Monday", "Tuesday", "Wednesday"]),
+        random.choice(student_classes)(i, time=random.uniform(0.75, 1.25))
+        for i in range(1, 20)  # Adjust student count as needed
     ]
 
     # Initialize viewership stats for each student
