@@ -10,6 +10,7 @@ import csv
 class Database:
     def __init__(self,file = None)->None:
         # self.file is the only required attribute for this class.
+        # the file attribute has to be a ".csv" file.
         self.file = file
 
 
