@@ -14,12 +14,12 @@ class ScrumGui:
         self.on_submit = on_submit
 
         # Create and resize background photo
-        # directory_path = os.path.dirname(__file__)
-        # original_img = Image.open(os.path.join(directory_path, "Photo.png"))
-        # resized_image = original_img.resize((520, 250))
-        # self.new_image = ImageTk.PhotoImage(resized_image)
-        # self.background_label = tk.Label(window, image=self.new_image)
-        # self.background_label.place(relwidth=1, relheight=1)
+        directory_path = os.path.dirname(__file__)
+        original_img = Image.open(os.path.join(directory_path, "Red.png"))
+        resized_image = original_img.resize((520, 250))
+        self.new_image = ImageTk.PhotoImage(resized_image)
+        self.background_label = tk.Label(window, image=self.new_image)
+        self.background_label.place(relwidth=1, relheight=1)
 
         # Frame for the entry boxes
         entry_frame = tk.Frame(window)
@@ -49,7 +49,7 @@ class ScrumGui:
         self.sign_time_entry.grid(row=1, column=3, padx=5)
 
         # Display Results
-        self.results = tk.Text(window, height=7, width=60)
+        self.results = tk.Text(window, height=6, width=60)
         self.results.pack(padx=5, pady=5)
 
         # Submit button
